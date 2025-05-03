@@ -131,7 +131,7 @@ export const App = () => {
 
     return (
         <div className="app">
-            <p style={{fontSize: '25px', fontWeight: 'bolder', marginRight:'150px', color: 'green'}}>NEW TODOLIST</p>
+            <p style={{fontSize: '25px', fontWeight: 'bolder', marginRight: '150px', color: 'green'}}>NEW TODOLIST</p>
             {todolistComponents}
 
             {/*<Test1/>*/}

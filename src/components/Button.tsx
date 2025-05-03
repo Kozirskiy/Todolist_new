@@ -1,5 +1,3 @@
-// import styled from "styled-components";
-
 export type ButtonPropsType = {
     title?: string
     onClick?: () => void
@@ -11,7 +9,7 @@ export type ButtonPropsType = {
 export const Button = ({title, onClick, disabledButton, style, className}: ButtonPropsType) => {
     return (
         <>
-            <button  className={className} disabled={disabledButton} onClick={onClick} style={style}>{title}</button>
+            <button className={className} disabled={disabledButton} onClick={onClick} style={style}>{title}</button>
         </>
     );
 };
