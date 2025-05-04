@@ -43,8 +43,8 @@ export const CreateItemForm = ({onCreateItem}: Props) => {
             <Button title={'+'} onClick={createItemHandler} disabledButton={isAddBtnDisabled}/>
 
             {error && <div className={'error-message'}>{error}</div>}
-            {title && <div>max lenht 30 symbol</div>}
-            {title.length > 30 && <div style={{color: 'red'}}>please max lenht 30 symbol</div>}
+            {title && <div>max length 30 symbol</div>}
+            {title.length > 30 && <div style={{color: 'red'}}>please max length 30 symbol</div>}
         </div>
     )
 }
