@@ -1,5 +1,6 @@
 import {type ChangeEvent, type KeyboardEvent, useState} from 'react'
-import {Button} from './Button'
+// import {Button} from './Button'
+import Button from '@mui/material/Button'
 
 type Props = {
     onCreateItem: (title: string) => void
@@ -31,7 +32,7 @@ export const CreateItemForm = ({onCreateItem}: Props) => {
     }
 
 
-    const isAddBtnDisabled = !title.trim() || title.trim().length > 30
+    // const isAddBtnDisabled = !title.trim() || title.trim().length > 30
 
     return (
         <div>
@@ -40,8 +41,8 @@ export const CreateItemForm = ({onCreateItem}: Props) => {
                    onChange={changeItemTitleHandler}
                    onKeyDown={createItemOnEnterHandler}/>
 
-            <Button title={'+'} onClick={createItemHandler} disabledButton={isAddBtnDisabled}/>
-
+            {/*<Button title={'+'} onClick={createItemHandler} disabledButton={isAddBtnDisabled}/>*/}
+            <Button  variant="contained" onClick={createItemHandler}>+</Button>
             {error && <div className={'error-message'}>{error}</div>}
             {title && <div>max length 30 symbol</div>}
             {title.length > 30 && <div style={{color: 'red'}}>please max length 30 symbol</div>}

@@ -3,6 +3,8 @@ import {type ChangeEvent} from "react";
 import {FilterValues, Task} from "../App.tsx";
 import {CreateItemForm} from "./CreateItemForm.tsx";
 import {EditableSpan} from "./EditableSpan.tsx";
+import IconButton from '@mui/material/IconButton'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 export type TodolistItemPropstype = {
     todolistId: string
@@ -40,14 +42,22 @@ export const TodolistItem = ({
     const changeTodolistTitleHandler = (title: string) => {
         changeTodolistTitle(todolistId, title)
     }
+    const deleteTodolistHandler = () => {
+        deleteTodolist(todolistId)
+    }
+
 
     return (
         <div>
 
             <h3>
                 <EditableSpan value={title} onChange={changeTodolistTitleHandler} />
-                <Button title={'❌'} style={{marginLeft: '5px'}} onClick={() => deleteTodolist(todolistId)}/>
+
+                {/*<Button title={'❌'} style={{marginLeft: '5px'}} onClick={() => deleteTodolist(todolistId)}/>*/}
             </h3>
+            <IconButton onClick={deleteTodolistHandler}>
+                <DeleteIcon />
+            </IconButton>
             <div>
                 <CreateItemForm onCreateItem={createTaskHandler}/>
             </div>
@@ -74,7 +84,10 @@ export const TodolistItem = ({
                                     onChange={changeTaskStatusHandler}
                                 />
                                 <EditableSpan value={task.title} onChange={changeTaskTitleHandler}/>
-                                <Button title={'❌'} onClick={deleteTaskHandler} style={{marginLeft: '5px'}}/>
+                                {/*<Button title={'❌'} onClick={deleteTaskHandler} style={{marginLeft: '5px'}}/>*/}
+                                <IconButton onClick={deleteTaskHandler}>
+                                    <DeleteIcon />
+                                </IconButton>
                             </li>
                         )
                     })}
