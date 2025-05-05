@@ -13,7 +13,9 @@ import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import {containerSx} from "./components/TodolistItem.styles.ts";
 import {NavButton} from "./components/NavButton.ts";
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import {createTheme, ThemeProvider} from '@mui/material/styles'
+import Switch from '@mui/material/Switch'
+import CssBaseline from '@mui/material/CssBaseline'
 
 
 // import {Test1} from "./components/Test1.tsx";
@@ -35,15 +37,21 @@ export type Todolist = {
 export type TasksState = {
     [todolistId: string]: Task[]
 }
-
+export type ThemeMode = 'dark' | 'light'
 export const App = () => {
-const theme = createTheme({
-    palette:{
-        primary: {
-            main: '#087EA4',
+    const [themeMode, setThemeMode] = useState<ThemeMode>('light')
+
+    const theme = createTheme({
+        palette: {
+            mode: themeMode,
+            primary: {
+                main: '#087EA4',
+            }
         }
+    })
+    const changeMode =()=>{
+        setThemeMode(themeMode === 'light' ? 'dark' : 'light')
     }
-})
 
 
     const todolistId_1 = v1()
@@ -85,13 +93,7 @@ const theme = createTheme({
             ...tasks,
             [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone} : t)
         })
-
-        // map method
-        // const newState = tasks.map(task => task.id == taskId ? {...task, isDone} : task)
-        // setTasks(newState)
-
     }
-
 
 // change filter
     const changeFilter = (filter: FilterValues, todolistId: string) => (
@@ -137,7 +139,7 @@ const theme = createTheme({
         }
 
         return (
-            <Paper sx={{ p: '0 20px 20px 20px' }}>
+            <Paper sx={{p: '0 20px 20px 20px'}}>
                 <TodolistItem
                     changeTodolistTitle={changeTodolistTitle}
                     changeTaskTitle={changeTaskTitle}
@@ -162,30 +164,31 @@ const theme = createTheme({
         <div className="app">
             {/*<p style={{fontSize: '25px', fontWeight: 'bolder', marginRight: '150px', color: 'green'}}>NEW TODOLIST</p>*/}
             <ThemeProvider theme={theme}>
+                <CssBaseline/>
                 <AppBar position="static" sx={{mb: '30px'}}>
                     <Toolbar>
                         <Container maxWidth={'lg'} sx={containerSx}>
                             <IconButton color="inherit">
                                 <MenuIcon/>
                             </IconButton>
-                            <div >
+                            <div>
                                 {/*<Button color="inherit">Sign in</Button>*/}
                                 {/*<Button color="inherit">Sign up</Button>*/}
                                 {/*<Button color="inherit">Faq</Button>*/}
 
                                 <NavButton>Sign in</NavButton>
                                 <NavButton>Sign up</NavButton>
-                                <NavButton background={'dodgerblue'}>Faq</NavButton>
+                                <NavButton background={theme.palette.primary.dark}>Faq</NavButton>
+                                <Switch color={'default'} onChange={changeMode} />
                             </div>
-
                         </Container>
                     </Toolbar>
                 </AppBar>
             </ThemeProvider>
 
 
-            <Container maxWidth={'lg'} >
-                <Grid container sx={{mb: '30px'}} >
+            <Container maxWidth={'lg'}>
+                <Grid container sx={{mb: '30px'}}>
                     <CreateItemForm onCreateItem={createTodolist}/>
                 </Grid>
 
