@@ -3,6 +3,16 @@ import {TodolistItem} from "./components/TodolistItem.tsx";
 import {useState} from "react";
 import {v1} from "uuid";
 import {CreateItemForm} from "./components/CreateItemForm.tsx";
+
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
+
+import Container from '@mui/material/Container'
+import Grid from '@mui/material/Grid'
+import Paper from '@mui/material/Paper'
 // import {Test1} from "./components/Test1.tsx";
 
 export type Task = {
@@ -85,20 +95,22 @@ export const App = () => {
     }
 
     //create todolist
-    const createTodolist = ( title: string) => {
+    const createTodolist = (title: string) => {
         const newTodolist: Todolist = {id: v1(), title, filter: 'All'}
-        setTodolists([ newTodolist, ...todolists])
-        setTasks({ [newTodolist.id]:[], ...tasks})
+        setTodolists([newTodolist, ...todolists])
+        setTasks({[newTodolist.id]: [], ...tasks})
     }
 
     // change task title
-    const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {setTasks({
-        ...tasks, [todolistId]: tasks[todolistId].map(task => task.id === taskId ? {...task, title} : task
-        )})
+    const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
+        setTasks({
+            ...tasks, [todolistId]: tasks[todolistId].map(task => task.id === taskId ? {...task, title} : task
+            )
+        })
     }
 
     const changeTodolistTitle = (todolistId: string, title: string) => {
-        setTodolists(todolists.map(todolist => todolist.id === todolistId ? { ...todolist, title } : todolist))
+        setTodolists(todolists.map(todolist => todolist.id === todolistId ? {...todolist, title} : todolist))
     }
 
 //ui
@@ -114,30 +126,53 @@ export const App = () => {
         }
 
         return (
-            <TodolistItem
-                changeTodolistTitle={changeTodolistTitle}
-                changeTaskTitle={changeTaskTitle}
-                key={tl.id}
-                todolistId={tl.id}
-                title={tl.title}
-                filter={tl.filter}
-                tasks={filteredTasks}
-                deleteTask={deleteTask}
-                changeFilter={changeFilter}
-                createTask={createTask}
-                changeTaskStatus={changeTaskStatus}
-                deleteTodolist={deleteTodolist}
-            />
+            <Paper>
+                <TodolistItem
+                    changeTodolistTitle={changeTodolistTitle}
+                    changeTaskTitle={changeTaskTitle}
+                    key={tl.id}
+                    todolistId={tl.id}
+                    title={tl.title}
+                    filter={tl.filter}
+                    tasks={filteredTasks}
+                    deleteTask={deleteTask}
+                    changeFilter={changeFilter}
+                    createTask={createTask}
+                    changeTaskStatus={changeTaskStatus}
+                    deleteTodolist={deleteTodolist}
+                />
+            </Paper>
+
         )
     })
 
 
-
     return (
         <div className="app">
-            <p style={{fontSize: '25px', fontWeight: 'bolder', marginRight: '150px', color: 'green'}}>NEW TODOLIST</p>
-            <CreateItemForm onCreateItem={createTodolist}/>
-            {todolistComponents}
+            {/*<p style={{fontSize: '25px', fontWeight: 'bolder', marginRight: '150px', color: 'green'}}>NEW TODOLIST</p>*/}
+            <AppBar position="static">
+                <Toolbar>
+                    <Container maxWidth={'lg'}>
+                        <IconButton color="inherit">
+                            <MenuIcon/>
+                        </IconButton>
+                        <Button color="inherit">Sign in</Button>
+                    </Container>
+                </Toolbar>
+            </AppBar>
+
+            <Container maxWidth={'lg'}>
+                <Grid container>
+                    <CreateItemForm onCreateItem={createTodolist}/>
+                </Grid>
+
+                <Grid container spacing={4}>
+                    {todolistComponents}
+                </Grid>
+            </Container>
+
+
+            {/*<CreateItemForm onCreateItem={createTodolist}/>*/}
 
             {/*<Test1/>*/}
             {/*<TestJS_Lessons/>*/}

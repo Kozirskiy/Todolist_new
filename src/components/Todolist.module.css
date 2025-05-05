@@ -1,0 +1,13 @@
+.buttonHover {
+    transition: all 3s ease;
+}
+
+.buttonHover:hover {
+    background-color: rgba(25, 118, 210, 0.08);
+    font-weight: bold;
+    border: 1px solid black;
+}
+
+.active-filter {
+    border-bottom: 2px solid #1976d2;
+}
