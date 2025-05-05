@@ -3,16 +3,19 @@ import {TodolistItem} from "./components/TodolistItem.tsx";
 import {useState} from "react";
 import {v1} from "uuid";
 import {CreateItemForm} from "./components/CreateItemForm.tsx";
-
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
-import Button from '@mui/material/Button'
+// import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
-
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
+import {containerSx} from "./components/TodolistItem.styles.ts";
+import {NavButton} from "./components/NavButton.ts";
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+
+
 // import {Test1} from "./components/Test1.tsx";
 
 export type Task = {
@@ -34,13 +37,21 @@ export type TasksState = {
 }
 
 export const App = () => {
+const theme = createTheme({
+    palette:{
+        primary: {
+            main: '#087EA4',
+        }
+    }
+})
+
 
     const todolistId_1 = v1()
     const todolistId_2 = v1()
 
     const [todolists, setTodolists] = useState<Todolist[]>([
-        {id: todolistId_1, title: 'Cars', filter: 'All'},
-        {id: todolistId_2, title: 'Expo', filter: 'All'}]
+        {id: todolistId_1, title: 'Skills', filter: 'All'},
+        {id: todolistId_2, title: 'Future Skills', filter: 'All'}]
     )
 
     const [tasks, setTasks] = useState<TasksState>({
@@ -126,7 +137,7 @@ export const App = () => {
         }
 
         return (
-            <Paper>
+            <Paper sx={{ p: '0 20px 20px 20px' }}>
                 <TodolistItem
                     changeTodolistTitle={changeTodolistTitle}
                     changeTaskTitle={changeTaskTitle}
@@ -150,19 +161,31 @@ export const App = () => {
     return (
         <div className="app">
             {/*<p style={{fontSize: '25px', fontWeight: 'bolder', marginRight: '150px', color: 'green'}}>NEW TODOLIST</p>*/}
-            <AppBar position="static">
-                <Toolbar>
-                    <Container maxWidth={'lg'}>
-                        <IconButton color="inherit">
-                            <MenuIcon/>
-                        </IconButton>
-                        <Button color="inherit">Sign in</Button>
-                    </Container>
-                </Toolbar>
-            </AppBar>
+            <ThemeProvider theme={theme}>
+                <AppBar position="static" sx={{mb: '30px'}}>
+                    <Toolbar>
+                        <Container maxWidth={'lg'} sx={containerSx}>
+                            <IconButton color="inherit">
+                                <MenuIcon/>
+                            </IconButton>
+                            <div >
+                                {/*<Button color="inherit">Sign in</Button>*/}
+                                {/*<Button color="inherit">Sign up</Button>*/}
+                                {/*<Button color="inherit">Faq</Button>*/}
 
-            <Container maxWidth={'lg'}>
-                <Grid container>
+                                <NavButton>Sign in</NavButton>
+                                <NavButton>Sign up</NavButton>
+                                <NavButton background={'dodgerblue'}>Faq</NavButton>
+                            </div>
+
+                        </Container>
+                    </Toolbar>
+                </AppBar>
+            </ThemeProvider>
+
+
+            <Container maxWidth={'lg'} >
+                <Grid container sx={{mb: '30px'}} >
                     <CreateItemForm onCreateItem={createTodolist}/>
                 </Grid>
 
@@ -170,9 +193,6 @@ export const App = () => {
                     {todolistComponents}
                 </Grid>
             </Container>
-
-
-            {/*<CreateItemForm onCreateItem={createTodolist}/>*/}
 
             {/*<Test1/>*/}
             {/*<TestJS_Lessons/>*/}

@@ -9,8 +9,10 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import Checkbox from '@mui/material/Checkbox'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
+import Box from '@mui/material/Box'
+import {containerSx} from './TodolistItem.styles'
+import {getListItemSx} from "./TodolistItem.styles";
 
-//import  styles from './Todolist.module.css'
 
 export type TodolistItemPropstype = {
     todolistId: string
@@ -85,16 +87,12 @@ export const TodolistItem = ({
                             changeTaskTitle(todolistId, task.id, title)
                         }
                         return (
-                            <ListItem key={task.id} className={task.isDone ? 'is-done' : ''}>
-                                {/*<input*/}
-                                {/*    type="checkbox"*/}
-                                {/*    checked={task.isDone}*/}
-                                {/*    onChange={changeTaskStatusHandler}*/}
-                                {/*/>*/}
-                                <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler}/>
-
-                                <EditableSpan value={task.title} onChange={changeTaskTitleHandler}/>
-                                {/*<Button title={'❌'} onClick={deleteTaskHandler} style={{marginLeft: '5px'}}/>*/}
+                            <ListItem key={task.id}
+                                      sx={getListItemSx(task.isDone)}>
+                                <div>
+                                    <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler}/>
+                                    <EditableSpan value={task.title} onChange={changeTaskTitleHandler}/>
+                                </div>
                                 <IconButton onClick={deleteTaskHandler}>
                                     <DeleteIcon/>
                                 </IconButton>
@@ -103,54 +101,7 @@ export const TodolistItem = ({
                     })}
                 </List>
             )}
-            <div>
-                {/*<Button variant={filter === 'All' ? 'active-filter ' : ''}*/}
-                {/*        color={'inherit'}*/}
-                {/*        onClick={changeFilterHandler}>*/}
-                {/*    All*/}
-                {/*</Button>*/}
-                {/*<Button*/}
-                {/*    className={filter === 'Active' ? 'active-filter ' : ''}*/}
-                {/*    title={'Active'}*/}
-                {/*    onClick={() => changeFilter('Active', todolistId)}*/}
-                {/*/>*/}
-
-                {/*<Button*/}
-                {/*    className={filter === 'Completed' ? 'active-filter ' : ''}*/}
-                {/*    title={'Completed'}*/}
-                {/*    onClick={() => changeFilter('Completed', todolistId)}*/}
-                {/*/>*/}
-
-
-                {/*<Button*/}
-                {/*    className={`${styles.buttonHover} ${filter === 'All' ? 'active-filter' : ''}`}*/}
-                {/*    variant="text"*/}
-                {/*    color="inherit"*/}
-                {/*    onClick={() => changeFilter('All', todolistId)}*/}
-                {/*>*/}
-                {/*    All*/}
-                {/*</Button>*/}
-
-                {/*<Button*/}
-                {/*    className={filter === 'Active' ? 'active-filter' : ''}*/}
-                {/*    variant="text"*/}
-                {/*    color="primary"*/}
-                {/*    onClick={() => changeFilter('Active', todolistId)}*/}
-                {/*>*/}
-                {/*    Active*/}
-                {/*</Button>*/}
-
-                {/*<Button*/}
-                {/*    className={filter === 'Completed' ? 'active-filter' : ''}*/}
-                {/*    variant="text"*/}
-                {/*    color="secondary"*/}
-                {/*    onClick={() => changeFilter('Completed', todolistId)}*/}
-                {/*>*/}
-                {/*    Completed*/}
-                {/*</Button>*/}
-
-            </div>
-            <div>
+            <Box sx={containerSx}>
                 <Button variant={filter === 'All' ? 'outlined' : 'text'}
                         color={'inherit'}
                         onClick={() => changeFilter('All', todolistId)}>
@@ -166,7 +117,7 @@ export const TodolistItem = ({
                         onClick={() => changeFilter('Completed', todolistId)}>
                     Completed
                 </Button>
-            </div>
+            </Box>
         </div>
     );
 };
