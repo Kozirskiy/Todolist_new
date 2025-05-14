@@ -38,6 +38,7 @@ export type TasksState = {
     [todolistId: string]: Task[]
 }
 export type ThemeMode = 'dark' | 'light'
+
 export const App = () => {
     const [themeMode, setThemeMode] = useState<ThemeMode>('light')
 
@@ -49,10 +50,9 @@ export const App = () => {
             }
         }
     })
-    const changeMode =()=>{
+    const changeMode = () => {
         setThemeMode(themeMode === 'light' ? 'dark' : 'light')
     }
-
 
     const todolistId_1 = v1()
     const todolistId_2 = v1()
@@ -80,10 +80,8 @@ export const App = () => {
     }
 
     const createTask = (title: string, todolistId: string) => {
-
         const newTask = {id: v1(), title: title, isDone: false}
         setTasks({...tasks, [todolistId]: tasks[todolistId].concat(newTask)})
-
         // setTasks([{id: v1(), title, isDone: false}, ...tasks])
     }
 
@@ -105,6 +103,7 @@ export const App = () => {
     const deleteTodolist = (todolistId: string) => {
         setTodolists(todolists.filter(tl => tl.id !== todolistId))
         delete tasks[todolistId]
+        setTasks({...tasks})
     }
 
     //create todolist
@@ -127,7 +126,6 @@ export const App = () => {
     }
 
 //ui
-
     const todolistComponents = todolists.map(tl => {
         let filteredTasks = tasks[tl.id]
 
@@ -139,26 +137,25 @@ export const App = () => {
         }
 
         return (
-            <Paper sx={{p: '0 20px 20px 20px'}}>
-                <TodolistItem
-                    changeTodolistTitle={changeTodolistTitle}
-                    changeTaskTitle={changeTaskTitle}
-                    key={tl.id}
-                    todolistId={tl.id}
-                    title={tl.title}
-                    filter={tl.filter}
-                    tasks={filteredTasks}
-                    deleteTask={deleteTask}
-                    changeFilter={changeFilter}
-                    createTask={createTask}
-                    changeTaskStatus={changeTaskStatus}
-                    deleteTodolist={deleteTodolist}
-                />
-            </Paper>
-
+            <Grid key={tl.id}>
+                <Paper sx={{p: '0 20px 20px 20px'}}>
+                    <TodolistItem
+                        changeTodolistTitle={changeTodolistTitle}
+                        changeTaskTitle={changeTaskTitle}
+                        todolistId={tl.id}
+                        title={tl.title}
+                        filter={tl.filter}
+                        tasks={filteredTasks}
+                        deleteTask={deleteTask}
+                        changeFilter={changeFilter}
+                        createTask={createTask}
+                        changeTaskStatus={changeTaskStatus}
+                        deleteTodolist={deleteTodolist}
+                    />
+                </Paper>
+            </Grid>
         )
     })
-
 
     return (
         <div className="app">
@@ -172,14 +169,10 @@ export const App = () => {
                                 <MenuIcon/>
                             </IconButton>
                             <div>
-                                {/*<Button color="inherit">Sign in</Button>*/}
-                                {/*<Button color="inherit">Sign up</Button>*/}
-                                {/*<Button color="inherit">Faq</Button>*/}
-
                                 <NavButton>Sign in</NavButton>
                                 <NavButton>Sign up</NavButton>
                                 <NavButton background={theme.palette.primary.dark}>Faq</NavButton>
-                                <Switch color={'default'} onChange={changeMode} />
+                                <Switch color={'default'} onChange={changeMode}/>
                             </div>
                         </Container>
                     </Toolbar>
@@ -192,7 +185,7 @@ export const App = () => {
                     <CreateItemForm onCreateItem={createTodolist}/>
                 </Grid>
 
-                <Grid container spacing={4}>
+                <Grid container spacing={6}>
                     {todolistComponents}
                 </Grid>
             </Container>
